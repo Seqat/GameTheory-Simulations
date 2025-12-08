@@ -6,11 +6,6 @@ This simulation demonstrates a leader-follower (Stackelberg) game where:
 - Attacker (follower) observes placement and chooses which ECU to attack
 """
 
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
-warnings.filterwarnings("ignore", category=UserWarning, message=".*keyword arguments have been deprecated.*")
-warnings.filterwarnings("ignore", message=".*The keyword arguments have been deprecated.*")
-warnings.filterwarnings("ignore", message=".*Please replace `use_container_width` with `width`.*")
 
 import streamlit as st
 import numpy as np
@@ -118,7 +113,7 @@ else:
     st.sidebar.info(f"Problem size: {n_combinations:,} possible placements")
 
 # Run simulation button
-run_button = st.sidebar.button("🚀 Run Simulation", type="primary", use_container_width=True)
+run_button = st.sidebar.button("🚀 Run Simulation", type="primary")
 
 # Initialize session state
 if "results" not in st.session_state:
@@ -255,7 +250,7 @@ with col1:
         paper_bgcolor='rgba(0,0,0,0)'
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig)
     
     # Legend
     st.markdown("""
@@ -279,7 +274,7 @@ with col2:
         title="ECU Criticality Values"
     )
     fig_crit.update_layout(height=350, showlegend=True)
-    st.plotly_chart(fig_crit, use_container_width=True)
+    st.plotly_chart(fig_crit)
 
 # Results section
 if st.session_state.results and selected_result:
@@ -339,7 +334,7 @@ if st.session_state.results and selected_result:
                 }
                 for r in st.session_state.results
             ])
-            st.dataframe(df_results, hide_index=True, use_container_width=True)
+            st.dataframe(df_results, hide_index=True)
         
         with col_chart:
             # Time comparison bar chart
@@ -351,7 +346,7 @@ if st.session_state.results and selected_result:
                 color=[r["algorithm"] for r in st.session_state.results]
             )
             fig_time.update_layout(showlegend=False, height=300)
-            st.plotly_chart(fig_time, use_container_width=True)
+            st.plotly_chart(fig_time)
 
 # Payoff matrix section
 st.markdown("---")
@@ -368,7 +363,7 @@ if st.session_state.results and selected_result:
         payoff_data.append({
             "Target": f"ECU-{target}",
             "Criticality": criticalities[target],
-            "Protected": "🛡️" if is_protected else "⚠️",
+            "Protected": "Yes" if is_protected else "No",
             "Defender Payoff": d_pay
         })
     
@@ -378,7 +373,7 @@ if st.session_state.results and selected_result:
     
     with col_pay1:
         st.markdown("**Defender Payoff by Attack Target**")
-        st.dataframe(df_payoff, hide_index=True, use_container_width=True)
+        st.dataframe(df_payoff, hide_index=True)
     
     with col_pay2:
         # Payoff visualization
@@ -387,7 +382,7 @@ if st.session_state.results and selected_result:
             x="Target", 
             y="Defender Payoff",
             color="Protected",
-            color_discrete_map={"🛡️": "limegreen", "⚠️": "coral"},
+            color_discrete_map={"Yes": "limegreen", "No": "coral"},
             title=f"Payoff Analysis: {selected_result['algorithm']}"
         )
         fig_payoff.add_hline(
@@ -397,7 +392,7 @@ if st.session_state.results and selected_result:
             annotation_text="Equilibrium Payoff"
         )
         fig_payoff.update_layout(height=350)
-        st.plotly_chart(fig_payoff, use_container_width=True)
+        st.plotly_chart(fig_payoff)
 
 # Educational section
 with st.expander("📚 Game Theory Concepts"):

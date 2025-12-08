@@ -7,11 +7,6 @@ This simulation demonstrates a Bayesian signaling game where:
 - Incomplete information: defender doesn't know if deviation is noise or attack
 """
 
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
-warnings.filterwarnings("ignore", category=UserWarning, message=".*keyword arguments have been deprecated.*")
-warnings.filterwarnings("ignore", message=".*The keyword arguments have been deprecated.*")
-warnings.filterwarnings("ignore", message=".*Please replace `use_container_width` with `width`.*")
 
 import streamlit as st
 import numpy as np
@@ -138,7 +133,7 @@ seed = st.sidebar.number_input(
     min_value=0, max_value=9999, value=42
 )
 
-run_button = st.sidebar.button("🚀 Run Simulation", type="primary", use_container_width=True)
+run_button = st.sidebar.button("🚀 Run Simulation", type="primary")
 
 # Calculate equilibrium
 equilibrium = find_equilibrium_type(verification_cost, attack_damage, prior_malicious, detection_prob)
@@ -222,7 +217,7 @@ with col2:
         legend=dict(yanchor="top", y=0.99, xanchor="right", x=0.99)
     )
     
-    st.plotly_chart(fig_dist, use_container_width=True)
+    st.plotly_chart(fig_dist)
 
 # Belief update visualization
 st.markdown("---")
@@ -271,7 +266,7 @@ with col_belief1:
         height=350
     )
     
-    st.plotly_chart(fig_belief, use_container_width=True)
+    st.plotly_chart(fig_belief)
 
 with col_belief2:
     st.markdown("### Decision Rule")
@@ -399,7 +394,7 @@ if st.session_state.gps_results:
                 yaxis_title="P(Malicious|observation)",
                 height=300
             )
-            st.plotly_chart(fig_ts_belief, use_container_width=True)
+            st.plotly_chart(fig_ts_belief)
         
         with col_ts2:
             # Cumulative payoffs
@@ -427,7 +422,7 @@ if st.session_state.gps_results:
                 yaxis_title="Cumulative Payoff",
                 height=300
             )
-            st.plotly_chart(fig_ts_payoff, use_container_width=True)
+            st.plotly_chart(fig_ts_payoff)
         
         # Action distribution
         col_act1, col_act2 = st.columns(2)
@@ -441,7 +436,7 @@ if st.session_state.gps_results:
                 color_discrete_map={"Trust": "steelblue", "Verify": "limegreen"}
             )
             fig_pie.update_layout(height=300)
-            st.plotly_chart(fig_pie, use_container_width=True)
+            st.plotly_chart(fig_pie)
         
         with col_act2:
             state_counts = history_df["true_state"].value_counts()
@@ -452,7 +447,7 @@ if st.session_state.gps_results:
                 color_discrete_map={"Benign": "royalblue", "Malicious": "crimson"}
             )
             fig_pie2.update_layout(height=300)
-            st.plotly_chart(fig_pie2, use_container_width=True)
+            st.plotly_chart(fig_pie2)
 
 # ROC Curve section
 st.markdown("---")
@@ -492,7 +487,7 @@ with col_roc1:
         height=400
     )
     
-    st.plotly_chart(fig_roc, use_container_width=True)
+    st.plotly_chart(fig_roc)
 
 with col_roc2:
     st.markdown("""
@@ -582,7 +577,7 @@ fig_tree.update_layout(
     height=400
 )
 
-st.plotly_chart(fig_tree, use_container_width=True)
+st.plotly_chart(fig_tree)
 
 # Educational section
 with st.expander("📚 Bayesian Game Theory Concepts"):
