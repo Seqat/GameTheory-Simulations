@@ -65,6 +65,47 @@ def count_combinations(n: int, k: int) -> int:
     return comb(n, k)
 
 
+def no_defense_baseline_damage(criticalities: list) -> float:
+    """
+    Calculate expected damage when no IDS is deployed.
+    Attacker will target the highest criticality ECU.
+    
+    Args:
+        criticalities: List of ECU criticality values
+        
+    Returns:
+        Maximum damage (highest criticality value)
+    """
+    return max(criticalities)
+
+
+def calculate_damage_reduction(
+    placement: list,
+    attacker_target: int,
+    criticalities: list,
+    detection_prob: float
+) -> float:
+    """
+    Calculate percentage damage reduction vs no-defense baseline.
+    
+    Args:
+        placement: Binary list of IDS placements
+        attacker_target: ECU being attacked
+        criticalities: List of ECU criticality values
+        detection_prob: IDS detection probability
+        
+    Returns:
+        Damage reduction percentage (0-100)
+    """
+    baseline = no_defense_baseline_damage(criticalities)
+    is_protected = placement[attacker_target] == 1
+    actual_damage = criticalities[attacker_target] * (1 - is_protected * detection_prob)
+    
+    if baseline == 0:
+        return 0.0
+    return ((baseline - actual_damage) / baseline) * 100
+
+
 def defender_payoff(
     placement: list,
     attack_target: int,

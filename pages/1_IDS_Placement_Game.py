@@ -19,7 +19,7 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from algorithms.utils import generate_ecus, defender_payoff, attacker_best_response
+from algorithms.utils import generate_ecus, defender_payoff, attacker_best_response, calculate_damage_reduction
 from algorithms.stackelberg import (
     exact_solution, greedy_heuristic, genetic_algorithm, 
     run_all_algorithms, count_combinations
@@ -347,6 +347,62 @@ if st.session_state.results and selected_result:
             )
             fig_time.update_layout(showlegend=False, height=300)
             st.plotly_chart(fig_time)
+
+# Defense Performance Comparison section
+if st.session_state.results and len(st.session_state.results) > 1:
+    st.markdown("---")
+    st.subheader("📊 Defense Performance Comparison")
+    
+    col_perf1, col_perf2 = st.columns([1, 1])
+    
+    with col_perf1:
+        st.markdown("**Damage Reduction vs No-Defense Baseline**")
+        
+        # Calculate damage reduction for each algorithm
+        perf_data = []
+        for r in st.session_state.results:
+            damage_reduction = calculate_damage_reduction(
+                r['optimal_placement'],
+                r['attacker_target'],
+                criticalities,
+                detection_prob
+            )
+            perf_data.append({
+                "Algorithm": r["algorithm"],
+                "Damage Reduction (%)": damage_reduction,
+                "Time (ms)": r["time_ms"]
+            })
+        
+        df_perf = pd.DataFrame(perf_data)
+        
+        # Bar chart for damage reduction
+        fig_damage = px.bar(
+            df_perf,
+            x="Algorithm",
+            y="Damage Reduction (%)",
+            color="Algorithm",
+            color_discrete_sequence=["#2ecc71", "#3498db", "#e74c3c"],
+            title="Damage Reduction by Algorithm"
+        )
+        fig_damage.update_layout(
+            showlegend=False, 
+            height=350,
+            yaxis=dict(range=[0, 100])
+        )
+        fig_damage.add_hline(
+            y=0,
+            line_dash="dash",
+            line_color="gray",
+            annotation_text="No Defense Baseline"
+        )
+        st.plotly_chart(fig_damage)
+    
+    with col_perf2:
+        # Performance summary metrics
+        st.markdown("**Algorithm Performance Summary:**")
+        for data in perf_data:
+            algo_short = data["Algorithm"].split()[0]
+            st.markdown(f"- **{algo_short}**: {data['Damage Reduction (%)']:.1f}% damage reduction in {data['Time (ms)']:.2f}ms")
 
 # Payoff matrix section
 st.markdown("---")

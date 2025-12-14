@@ -10,25 +10,26 @@ This project is a Streamlit-based application that models cybersecurity scenario
 
 Models the interaction between a defender placing Intrusion Detection Systems (IDS) and an attacker targeting Electronic Control Units (ECUs).
 
-  * **Game Type:** Leader-Follower (Stackelberg). The defender commits to a defense strategy, and the attacker observes and optimizes their attack.
-  * **Simulation Features:**
-      * **Network Topology:** Visualizes the vehicle network and protected nodes.
-      * **Algorithms:** Compare three different placement strategies:
-          * **Exact:** Exhaustive search (optimal for small N).
-          * **Greedy Heuristic:** Fast, near-optimal placement based on criticality.
-          * **Genetic Algorithm:** Evolutionary approach for complex spaces.
-      * **Analysis:** Comparison of computation time, defender payoff, and attack targets.
+* **Game Type:** Leader-Follower (Stackelberg). The defender commits to a defense strategy, and the attacker observes and optimizes their attack.
+* **Simulation Features:**
+  * **Network Topology:** Visualizes the vehicle network and protected nodes.
+  * **Algorithms:** Compare three different placement strategies:
+    * **Exact:** Exhaustive search (optimal for small N).
+    * **Greedy Heuristic:** Fast, near-optimal placement based on criticality.
+    * **Genetic Algorithm:** Evolutionary approach for complex spaces.
+  * **Analysis:** Comparison of computation time, defender payoff, and attack targets.
+  * **Defense Performance Comparison:** Damage reduction metrics vs no-defense baseline with algorithm performance summary.
 
 ### 2\. 📡 GPS Spoofing Game (Bayesian Game)
 
 Models a scenario where an attacker may inject spoofed GPS signals, and the defender must decide whether to verify the signal based on observed deviations.
 
-  * **Game Type:** Bayesian Signaling Game with incomplete information. The defender uses Bayes' rule to update their belief about whether a signal is benign noise or a malicious attack.
-  * **Simulation Features:**
-      * **Belief Updates:** Visualizes how the probability of an attack changes based on signal deviation.
-      * **Equilibrium Analysis:** Determines if the game state results in a Separating, Pooling, or Semi-Separating equilibrium.
-      * **ROC Analysis:** Receiver Operating Characteristic curves for detection thresholds.
-      * **Repeated Games:** Simulates the game over multiple rounds to track cumulative payoffs and detection rates.
+* **Game Type:** Bayesian Signaling Game with incomplete information. The defender uses Bayes' rule to update their belief about whether a signal is benign noise or a malicious attack.
+* **Simulation Features:**
+  * **Belief Updates:** Visualizes how the probability of an attack changes based on signal deviation.
+  * **Equilibrium Analysis:** Determines if the game state results in a Separating, Pooling, or Semi-Separating equilibrium.
+  * **ROC Analysis:** Receiver Operating Characteristic curves for detection thresholds.
+  * **Repeated Games:** Simulates the game over multiple rounds to track cumulative payoffs and detection rates.
 
 ## 📂 Project Structure
 
@@ -50,7 +51,7 @@ Models a scenario where an attacker may inject spoofed GPS signals, and the defe
 
 ### Prerequisites
 
-  * Python 3.8 or higher
+* Python 3.8 or higher
 
 ### 1\. Clone the Repository
 
@@ -101,7 +102,7 @@ The Defender verifies the signal only if the posterior belief exceeds a calculat
 
 ## 🛠️ Built With
 
-  * **[Streamlit](https://streamlit.io/):** Interactive web interface.
-  * **[Plotly](https://plotly.com/python/):** Interactive charts and network graphs.
-  * **[NetworkX](https://networkx.org/):** Graph topology for ECU networks.
-  * **[NumPy](https://numpy.org/) & [SciPy](https://scipy.org/):** Mathematical computations and statistical distributions.
+* **[Streamlit](https://streamlit.io/):** Interactive web interface.
+* **[Plotly](https://plotly.com/python/):** Interactive charts and network graphs.
+* **[NetworkX](https://networkx.org/):** Graph topology for ECU networks.
+* **[NumPy](https://numpy.org/) & [SciPy](https://scipy.org/):** Mathematical computations and statistical distributions.
